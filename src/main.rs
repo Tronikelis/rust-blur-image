@@ -19,7 +19,7 @@ fn main() {
         }
     }
 
-    if input.len() <= 0 {
+    if input.len() == 0 {
         panic!("provide the input");
     }
 
