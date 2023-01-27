@@ -23,7 +23,7 @@ fn main() {
         panic!("provide the input");
     }
 
-    let file_extension = input.split(".").last().unwrap();
+    let file_extension = input.split('.').last().unwrap();
 
     let image = Reader::open(&input).unwrap().decode().unwrap();
 
