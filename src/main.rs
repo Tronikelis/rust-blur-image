@@ -1,14 +1,21 @@
 use image::{io::Reader, GenericImageView, ImageBuffer, Pixel, Rgb, RgbImage};
 use std::env;
 
+mod utils;
+use utils::dimensions::calc_dimensions;
+
 fn main() {
     let args: Vec<String> = env::args().collect();
 
     let mut input = String::new();
+    let mut strength = 0;
 
     for (i, item) in args.iter().enumerate() {
         if item == "-i" {
             input = args.get(i + 1).unwrap().to_owned();
+        }
+        if item == "-s" {
+            strength = args.get(i + 1).unwrap().parse().unwrap();
         }
     }
 
@@ -20,16 +27,7 @@ fn main() {
 
     let image = Reader::open(&input).unwrap().decode().unwrap();
 
-    let dimensions: Vec<(i32, i32)> = vec![
-        (0, 1),
-        (1, 1),
-        (1, 0),
-        (1, -1),
-        (0, -1),
-        (-1, -1),
-        (-1, 0),
-        (-1, 1),
-    ];
+    let dimensions = calc_dimensions(&strength).unwrap();
 
     let (image_dimensions_x, image_dimensions_y) = image.dimensions();
     let mut blurred_image: RgbImage = ImageBuffer::new(image_dimensions_x, image_dimensions_y);
